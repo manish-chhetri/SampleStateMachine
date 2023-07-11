@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '2.7.12'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.12'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.example'
+version = '1.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	springStatemachineVersion = '3.1.0'
+}
+
+dependencies {
+	implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+	implementation "org.springframework.statemachine:spring-statemachine-core:$springStatemachineVersion"
+	compileOnly 'org.projectlombok:lombok:1.18.26'
+	annotationProcessor 'org.projectlombok:lombok:1.18.26'
+	testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+	testCompileOnly 'org.springframework.statemachine:spring-statemachine-test:2.0.1.RELEASE'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.statemachine:spring-statemachine-bom:${springStatemachineVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
